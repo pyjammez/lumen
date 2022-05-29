@@ -27,6 +27,7 @@ class BirthdateHelperTest extends TestCase
                 "1933-05-04 00:00:00", "America/Los_Angeles",
                 "11 months, 4 days"
             ],
+
             "birthday tomorrow" => [
                 "2022-05-29 03:20:00", "America/Los_Angeles",
                 "1986-05-30 00:00:00", "America/Los_Angeles",
@@ -54,11 +55,13 @@ class BirthdateHelperTest extends TestCase
                 "1986-05-29 00:00:00", "America/Los_Angeles",
                 "20 hours"
             ],
+
             "within 1 and 2 hours left" => [
                 "2022-05-29 22:20:00", "America/Los_Angeles",
                 "1986-05-29 00:00:00", "America/Los_Angeles",
                 "1 hour"
             ],
+
             "less than an hour left" => [
                 "2022-05-29 23:20:00", "America/Los_Angeles",
                 "1986-05-29 00:00:00", "America/Los_Angeles",
@@ -86,18 +89,22 @@ class BirthdateHelperTest extends TestCase
                 "2022-05-28 08:00:00", "America/Los_Angeles", // now and client's timezone
                 "1985-07-30 00:00:00", "America/Los_Angeles", // birthday and the user's believed timezone
                 "2022-07-30", 36, false], // next birthday, current age, is it their birthday today?
+
             "birthday earlier in year" => [
                 "2022-12-28 08:00:00", "America/Los_Angeles",
                 "1985-07-30 00:00:00", "America/Los_Angeles",
                 "2023-07-30", 37, false],
+
             "birthday same day" => [
                 "2022-07-30 08:00:00", "America/Los_Angeles",
                 "1985-07-30 00:00:00", "America/Los_Angeles",
                 "2023-07-30", 37, true],
+
             "birthday in an hour" => [
                 "2022-07-29 23:00:00", "America/Los_Angeles",
                 "1985-07-30 00:00:00", "America/Los_Angeles",
                 "2022-07-30", 36, false],
+
             "birthday an hour ago" => [
                 "2022-07-30 01:00:00", "America/Los_Angeles",
                 "1985-07-30 00:00:00", "America/Los_Angeles",

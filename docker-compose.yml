@@ -41,10 +41,6 @@ services:
       - "27017:27017"
     networks:
       - lumen
-#    volumes:
-#      - ./mongodb/db:/data/db
-#      - ./mongodb/dev.archive:/Databases/dev.archive
-#      - ./mongodb/production:/Databases/production
   mongo-express:
     image: mongo-express
     container_name: mexpress

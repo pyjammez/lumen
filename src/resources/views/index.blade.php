@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ABC Store Birthday Reminder</title>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ABC Store Birthday Reminder</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
   <div id="root-container">
@@ -15,7 +15,6 @@
       <div class="my-3">
         <h1>ABC Store Birthday Reminder</h1>
         <p>To send birthday emails to our users at the moment their birth day starts with consideration to their timezone.</p>
-
         Our timezone: <select name="client_timezone" id="clientTimezonePicker" onchange="loadBirthdateReminderList()" required></select>
       </div>
 
@@ -27,7 +26,6 @@
       <button type="button" class="btn btn-primary" onclick="loadBirthdateReminderList()">
         Refresh List
       </button>
-
 
       <!-- Modal -->
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -119,53 +117,55 @@
     $('#clientTimezonePicker').val(tz);
 
     function addBirthday(el, event) {
-        event.preventDefault();
+      event.preventDefault();
 
-        $.ajax({
-            type: "POST",
-            url: "/birthdays",
-            data: $(el).serialize(),
-            dataType: "json",
-            success: function(data) {
-                el.reset();
-                $('.modal').modal('hide');
-                loadBirthdateReminderList();
-            },
-            error: function(data) {
-                $('.modal-body').append('<div class="mt-3 alert alert-danger" role="alert">'+data.responseText+'</div>');
-            }
-        });
+      $.ajax({
+        type: "POST",
+        url: "/birthdays",
+        data: $(el).serialize(),
+        dataType: "json",
+        success: function(data) {
+          el.reset();
+          $('.modal').modal('hide');
+          loadBirthdateReminderList();
+        },
+        error: function(data) {
+          $('.modal-body').append('<div class="mt-3 alert alert-danger" role="alert">'+data.responseText+'</div>');
+        }
+      });
     }
 
     function loadBirthdateReminderList() {
       var clientTimezone = $('#clientTimezonePicker').val();
 
       $.ajax({
-          type: "GET",
-          url: "/birthdays",
-          dataType: "json",
-          data: {
-            timezone: clientTimezone,
-            datetime: moment().format("YYYY-MM-DD HH:mm:ss")
-          },
-          success: function(data) {
-            $('tbody').empty();
+        type: "GET",
+        url: "/birthdays",
+        dataType: "json",
+        data: {
+          timezone: clientTimezone,
+          datetime: moment().format("YYYY-MM-DD HH:mm:ss")
+        },
+        success: function(data) {
+          $('tbody').empty();
 
-            for (row of data) {
-              $('tbody').append(`
-                <tr class="${row.isBirthday ? 'table-success' : ''}">
-                  <td>${row.name}</td>
-                  <td>${row.birthdate}</td>
-                  <td>${row.message}</td>
-                </tr>
-              `);
-            }
-          },
-          error: function() {
-            alert('error handling here');
+          for (row of data) {
+            $('tbody').append(`
+              <tr class="${row.isBirthday ? 'table-success' : ''}">
+                <td>${row.name}</td>
+                <td>${row.birthdate}</td>
+                <td>${row.message}</td>
+              </tr>
+            `);
           }
+        },
+        error: function() {
+          alert('error handling here');
+        }
       });
     }
+
+    loadBirthdateReminderList();
   </script>
 </body>
 </html>

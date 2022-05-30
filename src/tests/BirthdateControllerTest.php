@@ -7,6 +7,13 @@ use Laravel\Lumen\Testing\DatabaseTransactions;
 
 class BirthdateControllerTest extends TestCase
 {
+    public function test_BirthdateController_index()
+    {
+        $response = $this->call('GET', '/birthdays');
+
+        $this->assertEquals(200, $response->status());
+    }
+
     public function test_BirthdateController_store()
     {
         $this->json('POST', 'birthdays', [
@@ -21,7 +28,7 @@ class BirthdateControllerTest extends TestCase
             'name' => 'James Hilton',
             'timezone' => 'America/LosAngeles',
             'birthdate' => '1985-07-30'
-        ])->seeJson([
+        ])->seeJsonEquals([
             'timezone' => ['The timezone must be a valid timezone.']
         ]);
 
@@ -29,7 +36,7 @@ class BirthdateControllerTest extends TestCase
             'name' => 'James Hilton',
             'timezone' => 'America/Los_Angeles',
             'birthdate' => '85-07-30'
-        ])->seeJson([
+        ])->seeJsonEquals([
             'birthdate' => ['The birthdate does not match the format Y-m-d.']
         ]);
     }

@@ -45,6 +45,9 @@ class BirthdateController extends Controller
         $bday->timezone = $request->timezone;
         $bday->save();
 
-        return response()->json($bday);
+        return response()->json([
+            'status' => 'success',
+            'data' => $bday
+        ]);
     }
 }

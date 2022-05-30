@@ -12,7 +12,5 @@ RUN apk add --no-cache --virtual .mongodb-ext-build-deps openssl-dev && \
 
 RUN docker-php-ext-enable mongodb.so
 
-#RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
 # for phpunit
 ENV PATH="./vendor/bin:${PATH}"
